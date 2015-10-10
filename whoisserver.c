@@ -62,9 +62,9 @@ void main(int argc,char *argv[])
     * Put the WHOIS socket number and our address info
     * into the socket structure
     */
-   sa.sin_port = sp->s_port;
+   //sa.sin_port = sp->s_port;
 
-   // sa.sin_port = htons(ntohs((u_short)sp->s_port)+portbase);
+   sa.sin_port = htons(ntohs((u_short)sp->s_port)+portbase);
 
    bcopy((char *)hp->h_addr,(char *)&sa.sin_addr,hp->h_length);
    sa.sin_family = hp->h_addrtype;

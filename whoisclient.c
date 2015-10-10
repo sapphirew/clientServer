@@ -23,7 +23,6 @@
  *--------------------------------------------------------------
  */
 
-u_short portbase = 0;
 
 void main(int argc,char *argv[])             
 {
@@ -36,8 +35,9 @@ void main(int argc,char *argv[])
    char *myname;            /* pointer to name of this program     */
    char *host;              /* pointer to remote host name         */
    char *user;              /* pointer to remote user name         */
+   u_short portbase = 0;
 
-   myname = argv[0];
+   myname = argv[0];       //./whoisclient.exe
    portbase = 8000;
 
    /*
@@ -48,8 +48,8 @@ void main(int argc,char *argv[])
        exit(1);
    }
 
-   host = argv[1];
-   user = argv[2];
+   host = argv[1];      //unix.cssd.pitt.edu
+   user = argv[2];      //haw69
 
    /* 
     * Look up the specified hostname
