@@ -40,6 +40,7 @@ void main(int argc,char *argv[])
    myname = argv[0];
    portbase = 8000;
 
+    
    /*
     * Look up the WHOIS service entry
     */
@@ -150,4 +151,41 @@ void whois(int sock){
 ./whoisclient.exe unix.cssd.pitt.edu haw69
 *---------------------------------------------*
 cc -o whoisclient.exe whoisclient.c
+*/
+
+
+
+/*
+char *alias;
+ alias = &(hp->h_alias);
+ if(alias == null)
+    printf("no alias-null\n");
+ else
+    printf("alias ame\n");
+ 
+ int i = 0;
+ while(hp-> h_alias[i]!=null){
+    printf("h_alias[%d]=%s\n",i, hp->h_alias[i]);
+    i++;
+ }
+ 
+// P67
+ printf("h_address = %d\n",hp->h_addrtype);
+ printf("h_addr_length=%d\n".hp->h_length);
+ 
+ 
+ char *aliadaddress;
+ aliasaddress = &(hp->h_address_list);
+ if(aliasaddress == null)
+    printf("no addresses\n");
+ else
+    printf("address list is\n");
+ 
+ i=0;
+ while(hp->h_addr_list[i]!=null){
+    printf("h_addr_list[%d]=%s\n",i,inet_ntoa(hp->h_addr_list[i]));
+    i++;
+ }
+ 
+ 
 */

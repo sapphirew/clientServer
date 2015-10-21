@@ -24,7 +24,7 @@
  */
 
 
-void main(int argc,char *argv[])             
+int main(int argc,char *argv[])             
 {
    int s;                   /* socket descriptor                   */
    int len;                 /* length of received data             */
@@ -49,9 +49,10 @@ void main(int argc,char *argv[])
    }
 
    host = argv[1];      //unix.cssd.pitt.edu
-   user = argv[2];      //haw69
+   user = argv[2];      //haw69 in my case
 
-   /* 
+    
+   /*
     * Look up the specified hostname
     */
    if ((hp = gethostbyname(host)) == NULL) {
@@ -59,6 +60,50 @@ void main(int argc,char *argv[])
        exit(1);
    }
 
+   //print name of the program
+    printf("Program name is %s\n", myname);
+    //same for host, user
+    printf("Program host is %s\n", argv[1]);
+    printf("Program user is %s\n", argv[2]);
+    
+    char *alias;
+    alias = *(hp->h_aliases);
+    if(alias == NULL)
+        printf("no alias-null\n");
+    else
+        printf("aliases are\n");
+    
+    /*
+     * print aliases if h_aliases is not NULL
+     */
+    int i = 0;
+    while(hp->h_aliases[i] != NULL){
+        printf("h_aliases[%d]=%s\n",i, hp->h_aliases[i]);
+        i++;
+    }
+    
+    /*
+     * print address type and length
+     */
+    printf("h_address = %d\n",hp->h_addrtype);
+    printf("h_addr_length=%d\n",hp->h_length);
+    
+    /*
+     * print addresses
+     */
+    char *aliasaddress;
+    aliasaddress = *(hp->h_addr_list)[0];
+    if(aliasaddress == NULL)
+        printf("no addresses\n");
+    else
+        printf("address list is:\n");
+    
+    i = 0;
+    while(hp->h_addr_list[i] != NULL){
+        printf("h_addr_list[%d]=%s\n",i,inet_ntoa(hp->h_addr_list[i]));
+        i++;
+    }
+ 
    /*
     * Put host's address and address type into socket structure
     */
@@ -112,4 +157,5 @@ void main(int argc,char *argv[])
       write(1,buf,len);
    close(s);
    exit(0);
+   
 }
