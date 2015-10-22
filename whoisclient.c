@@ -37,6 +37,8 @@ int main(int argc,char *argv[])
    char *user;              /* pointer to remote user name         */
    u_short portbase = 0;
 
+   printf("port is %d\n", );
+
    myname = argv[0];       //./whoisclient.exe
    portbase = 8000;
 
@@ -123,24 +125,31 @@ int main(int argc,char *argv[])
     */
    //sa.sin_port = sp->s_port;
    sa.sin_port = htons(ntohs((u_short)sp->s_port)+portbase);
-
+   printf("port after portbase is%d\n", sa.sin_port);
 
    /*
     * Allocate an open socket.
     */
+
+    printf("getting a socket\n");
    if ((s = socket(hp->h_addrtype, SOCK_STREAM, 0)) < 0){
       perror("socket");
       exit(1);
    }
+   printf("socket obtained%d\n", s);
 
    /*
     * Connect to the remote server.
     */
+
+    printf("Going to connect\n");
    if (connect(s, (struct sockaddr *)(&sa), sizeof sa) < 0)
    {
       perror("connect");
       exit(1);
    }
+   printf("connect successful\n");
+   printf("user is %s\n", user);
 
    /* 
     * Send the request
@@ -156,6 +165,8 @@ int main(int argc,char *argv[])
    while ( (len = read(s, buf, BUFSIZ)) > 0)
       write(1,buf,len);
    close(s);
+   printf("reply is\n");
+   printf("ending client-close\n");
    exit(0);
    
 }
