@@ -27,7 +27,7 @@
 
 void whois (int sock);
 u_short portbase = 0;
-void main(int argc,char *argv[])
+int main(int argc,char *argv[])
 {
    int s, t;                        /* socket descriptor                   */
    int i;                           /* general purpose integer             */
@@ -39,7 +39,6 @@ void main(int argc,char *argv[])
 
    myname = argv[0];
    portbase = 8000;
-
     
    /*
     * Look up the WHOIS service entry

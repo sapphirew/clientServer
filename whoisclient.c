@@ -37,8 +37,6 @@ int main(int argc,char *argv[])
    char *user;              /* pointer to remote user name         */
    u_short portbase = 0;
 
-   printf("port is %d\n", );
-
    myname = argv[0];       //./whoisclient.exe
    portbase = 8000;
 
@@ -124,6 +122,7 @@ int main(int argc,char *argv[])
     * Put the whois socket number into the socket structure.
     */
    //sa.sin_port = sp->s_port;
+   printf("original port is %d\n", sp->s_port);
    sa.sin_port = htons(ntohs((u_short)sp->s_port)+portbase);
    printf("port after portbase is%d\n", sa.sin_port);
 
@@ -148,7 +147,7 @@ int main(int argc,char *argv[])
       perror("connect");
       exit(1);
    }
-   printf("connect successful\n");
+   printf("connect successfully\n");
    printf("user is %s\n", user);
 
    /* 
@@ -162,11 +161,11 @@ int main(int argc,char *argv[])
    /*
     * Read the reply and put to user's output
     */
+    printf("reply is\n");
    while ( (len = read(s, buf, BUFSIZ)) > 0)
       write(1,buf,len);
-   close(s);
-   printf("reply is\n");
-   printf("ending client-close\n");
-   exit(0);
+     close(s);
+     printf("ending client-close\n");
+     exit(0);
    
 }
