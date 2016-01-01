@@ -1,11 +1,5 @@
 /* TCPmtechod.c - main, TCPechod, prstats */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <pthread.h>
-
 #include <sys/types.h>
 #include <sys/signal.h>
 #include <sys/socket.h>
@@ -14,6 +8,14 @@
 #include <sys/wait.h>
 #include <sys/errno.h>
 #include <netinet/in.h>
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <pthread.h>
+#include <errno.h>
+
 
 #define	QLEN		  32	/* maximum connection queue length	*/
 #define	BUFSIZE		4096

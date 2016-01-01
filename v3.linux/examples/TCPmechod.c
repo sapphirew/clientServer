@@ -13,6 +13,7 @@
 #define	QLEN		  32	/* maximum connection queue length	*/
 #define	BUFSIZE		4096
 
+extern int errno;
 int		errexit(const char *format, ...);
 int		passiveTCP(const char *service, int qlen);
 int		echo(int fd);
@@ -21,8 +22,7 @@ int		echo(int fd);
  * main - Concurrent TCP server for ECHO service
  *------------------------------------------------------------------------
  */
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	char	*service = "echo";	/* service name or port number	*/
 	struct sockaddr_in fsin;	/* the from address of a client	*/
@@ -43,10 +43,12 @@ main(int argc, char *argv[])
 	}
 
 	msock = passiveTCP(service, QLEN);
+    printf("mastersock assigned\n");
 
 	nfds = getdtablesize();
 	FD_ZERO(&afds);
 	FD_SET(msock, &afds);
+    printf("mastersock set in active file descriptor\n");
 
 	while (1) {
 		memcpy(&rfds, &afds, sizeof(rfds));
@@ -55,15 +57,18 @@ main(int argc, char *argv[])
 				(struct timeval *)0) < 0)
 			errexit("select: %s\n", strerror(errno));
 		if (FD_ISSET(msock, &rfds)) {
+            printf("New client coming!\n");
 			int	ssock;
 
 			alen = sizeof(fsin);
 			ssock = accept(msock, (struct sockaddr *)&fsin,
 				&alen);
+            printf("slavesock assigned\n");
 			if (ssock < 0)
 				errexit("accept: %s\n",
 					strerror(errno));
 			FD_SET(ssock, &afds);
+            printf("slavesock set in active file descriptor\n");
 		}
 		for (fd=0; fd<nfds; ++fd)
 			if (fd != msock && FD_ISSET(fd, &rfds))

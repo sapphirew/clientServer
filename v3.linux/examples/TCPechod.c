@@ -61,6 +61,7 @@ main(int argc, char *argv[])
 		}
 		switch (fork()) {
 		case 0:		/* child */
+			printf("This is a child process. My pid is %u.\n", getpid());
 			(void) close(msock);
 			exit(TCPechod(ssock));
 		default:	/* parent */
@@ -87,6 +88,8 @@ TCPechod(int fd)
 			errexit("echo read: %s\n", strerror(errno));
 		if (write(fd, buf, cc) < 0)
 			errexit("echo write: %s\n", strerror(errno));
+		printf("Client says: %s\n", buf);
+
 	}
 	return 0;
 }
